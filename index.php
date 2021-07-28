@@ -1,7 +1,3 @@
-<?php
-session_start();
-
-?>
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
 <meta name="apple-mobile-web-app-title" content="CodePen">
 
@@ -11,9 +7,7 @@ session_start();
 
 
 <title>Submission Apps</title>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
@@ -23,9 +17,21 @@ session_start();
   <?php
   include 'conn.php';
   if (isset($_POST['submit'])) {
+    session_start();
+    $timeout = 10;
+    $timeout = $timeout * 60; // menit ke detik
+     if(isset($_SESSION['start_session'])){
+     $elapsed_time = time()-$_SESSION['start_session'];
+     if($elapsed_time >= $timeout){
+     session_destroy();
+     echo "<script type='text/javascript'>alert('Sesi telah berakhir');window.location='$logout'</script>";
+      }
+     }
+    $_SESSION['start_session']=time();
+
     $username = $_POST['username'];
     $password = md5($_POST['password']);
-    $sql = "SELECT * FROM user";
+    $sql = "SELECT * FROM user WHERE username='$username' AND password='$password'";
     $query = mysqli_query($koneksi, $sql);
     if (mysqli_num_rows($query) == 0) {
       echo '<div class="alert alert-danger">
@@ -36,10 +42,9 @@ session_start();
       $_SESSION['username'] = $username;
       $_SESSION['nama_user'] = $d['nama_user'];
       $_SESSION['status'] = $d['status'];
+      $_SESSION['level'] = "admin";
       $_SESSION['hak_akses'] = $d['hak_akses'];
-      echo '<meta http-equiv="refresh" content="0; url=admin/karyawan.php">';
-
-      // header("location:admin/karyawan.php?alert=success");
+      echo '<meta http-equiv="refresh" content="0; url=admin/index.php">';
     }
   }
   ?>
