@@ -23,11 +23,11 @@ if (isset($_POST['submit'])) {
   if ($fire) {
     move_uploaded_file($file_tmp1, $location . $file1);
     move_uploaded_file($file_tmp2, $location . $file2);
-    echo "<script>alert('Anda Berhasil Menambah Data')</script>";
-    echo '<meta http-equiv="refresh" content="0; url=karyawan.php">';
+    // echo "<script>alert('Anda Berhasil Menambah Data')</script>";
+    echo '<meta http-equiv="refresh" content="0; url=input-karyawan.php?alert=1">';
   } else {
-    echo "<script>alert('Anda Berhasil Menambah Data')</script>";
-    echo '<meta http-equiv="refresh" content="0; url=karyawan.php">';
+    // echo "<script>alert('Anda Berhasil Menambah Data')</script>";
+    echo '<meta http-equiv="refresh" content="0; url=input-karyawan.php?alert=1">';
   }
 } else {
   $id = $_GET['id'];
