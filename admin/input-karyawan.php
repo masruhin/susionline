@@ -1,3 +1,16 @@
+<?php
+include '../conn.php';
+
+
+  $timezone = "Asia/Jakarta";
+  date_default_timezone_set($timezone);
+  $today = date("Y-m-d");
+
+session_start();
+if (empty($_SESSION)) {
+  echo "<script language='JavaScript'>alert('Silahkan Login Terlebih Dahulu');window.location='../index.php'</script>";
+}
+?>
 <!DOCTYPE html>
 <html>
 <?php include "head.php";
@@ -15,125 +28,135 @@
     <?php include "menu.php"; ?>
     <?php include "waktu.php"; ?>
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <section class="content-header">
-        <h1>
-          <center>
-            Submission Form
-          </center>
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        </ol>
-        <div class="content-wrapper">
-          <form class="form-horizontal style-form" action="user_act.php" method="post" enctype="multipart/form-data" name="form1" id="form1">
-            <section class="content">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="card card-primary">
-                      <div class="card-header">
-                        <h3 class="card-title"></h3>
-                      </div>
-                      <form role="form">
-                        <div class="card-body">
-                          <div class="form-group">
-                            <label class="exampleInputPassword1">Nama</label>
-                            <input name="nama" type="text" class="form-control" id="nama" placeholder="Enter Name" autocomplete="off" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="exampleInputPassword1">Pekerjaan</label>
-                            <input name="pekerjaan" type="text" class="form-control" id="pekerjaan" placeholder="enter Job" autocomplete="off" required>
-                          </div>
-                          <div class="form-group">
-                            <label class="exampleInputPassword1">Deptartment</label>
-                            <input name="dept" type="text" class="form-control" id="dept" placeholder="Enter Dept" autocomplete="off" required>
-                          </div>
-                          <div class="form-group">
-                            <label class="exampleInputPassword1">ID Employee</label>
-                            <input name="id_employee" type="text" class="form-control" id="id_employee" placeholder="Enter ID" autocomplete="off" required>
-                          </div>
-                          <div class="form-group">
-                            <label class="exampleInputPassword1">Tanggal</label>
-                            <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='date' id="date" placeholder='Tanggal' autocomplete='off' required='required'>
-                          </div>
-                          <div class="form-group">
-                            <label class="exampleInputPassword1">Judul</label>
-                            <input name="judul" type="text" class="form-control" id="judul" placeholder="" autocomplete="off" required>
-                          </div>
-                        </div>
-                    </div>
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Form Susi
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      </ol>
+    </section>
+
+    <section class="content">
+      <div class="row">
+        <div class="col-md-8">
+           <?php  
+            // fungsi untuk menampilkan pesan
+            // jika alert = "" (kosong)
+            // tampilkan pesan "" (kosong)
+            if (empty($_GET['alert'])) {
+              echo "";
+            } 
+            // jika alert = 1
+            // tampilkan pesan Sukses "Jenis Barang baru berhasil disimpan"
+            elseif ($_GET['alert'] == 1) {
+              echo "<div class='alert alert-success alert-dismissable'>
+                      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                      <h4>  <i class='icon fa fa-check-circle'></i> Sukses!</h4>
+                      Data Berhasil Disimpan
+                    </div>";
+            }
+            ?>
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Only Susi</h3>
+            </div>
+            <form class="form-horizontal" action="user_act.php" method="post" enctype="multipart/form-data" name="form1" id="form1">
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Nama</label>
+                  <div class="col-sm-8">
+                    <input name="nama" class="form-control" id="nama" placeholder="Enter..">
                   </div>
+                </div>
 
-                  <div class="col-md-6">
-                    <div class="card card-warning">
-                      <div class="card-header">
-                        <h3 class="card-title"></h3>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-10">
-                          <div class="form-group">
-                            <label>Biaya Perbaikan</label>
-                            <input name="biaya" type="text" class="form-control" id="biaya" placeholder="Enter ..." autocomplete="off" required>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputFile">Kondisi Sebelum</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input name="sebelum" type="file" class="custom-file-input" id="sebelum">
-                          </div>
-                          <div class="input-group-append">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputFile">Kondisi Sesudah</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input name="sebelum2" type="file" class="custom-file-input" id="sebelum2">
-                          </div>
-                          <div class="input-group-append">
-                          </div>
-                        </div>
-                      </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Pekerjaan</label>
+                  <div class="col-sm-8">
+                    <input name="pekerjaan" class="form-control" id="pekerjaan" placeholder="Enter..">
+                  </div>
+                </div>
 
-                      <div class="card-body">
-                        <form role="form">
-                          <div class="row">
-                            <div class="col-sm-10">
-                              <!-- textarea -->
-                              <div class="form-group">
-                                <label>Keterangan Kondisi Sebelum</label>
-                                <input name="ketsatu" type="text" class="form-control" id="ketsatu" placeholder="Enter ..." autocomplete="off" required>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-10">
-                              <div class="form-group">
-                                <label>Keterangan Kondisi Sesudah</label>
-                                <input name="ketdua" type="text" class="form-control" id="ketdua" placeholder="Enter ..." autocomplete="off" required>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 col-sm-2 control-label"></label>
-                      <div class="col-sm-8">
-                        <input type="submit" name="submit" value="Simpan" class="btn btn-sm btn-primary" />&nbsp;
-                        <a href="karyawan.php" class="btn btn-sm btn-danger">Batal </a>
-                      </div>
-                    </div>
-          </form>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Department</label>
+                  <div class="col-sm-8">
+                    <input name="dept" class="form-control" id="dept" placeholder="Enter..">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ID Employee</label>
+                  <div class="col-sm-8">
+                    <input name="id_employee" class="form-control" id="id_employee" placeholder="Enter..">
+                  </div>
+                </div>
+
+                 <div class="form-group">
+                  <label class="col-sm-4 control-label">Tanggal</label>
+                  <div class="col-sm-8">
+                   <input type='text' class="input-group date form-control" data-date="" data-date-format="yyyy-mm-dd" name='date' id="date" placeholder='Tanggal' autocomplete='off' required='required' value="<?php echo $today?>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Judul</label>
+                  <div class="col-sm-8">
+                    <input name="judul" class="form-control" id="judul" placeholder="Enter..">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Biaya Perbaikan</label>
+                  <div class="col-sm-8">
+                    <input type="number" name="biaya" class="form-control" id="biaya" placeholder="Enter..">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label  class="col-sm-4 control-label">Kondisi Sebelum</label>
+                  <div class="col-sm-4">
+                    <input type="file" name="sebelum" class="form-control" id="sebelum" placeholder="Password">
+                    <small class="help-block" style="color: red">Ukuran yang di upload Max 2Mb</small>
+                  </div>
+                </div>                
+
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">Kondisi Sebelum</label>
+                  <div class="col-sm-4">
+                    <input type="file" name="sebelum2" class="form-control" id="sebelum2" placeholder="Password">
+                    <small class="help-block" style="color: red">Ukuran yang di upload Max 2Mb</small>
+                  </div>
+                </div>                
+
+                 <div class="form-group">
+                  <label class="col-sm-4 control-label">Keterangan Kondisi Sebelum</label>
+                  <div class="col-sm-8">
+                    <textarea name="ketsatu" type="text" class="form-control" id="ketsatu" rows="3" placeholder="Enter ..."></textarea>
+                  </div>
+                </div>
+
+                 <div class="form-group">
+                  <label class="col-sm-4 control-label">Keterangan Kondisi Sesudah</label>
+                  <div class="col-sm-8">
+                   <textarea name="ketdua" type="text" class="form-control" id="ketdua" rows="3" placeholder="Enter ..."></textarea>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer" style="text-align: center;">
+                  <input type="submit" name="submit" value="Simpan" class="btn btn-sm btn-info" />&nbsp;
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
         </div>
-    </div>
+        <div class="col-md-2"></div>
+      </div>
+    </section>
   </div>
-  </div>
-  </section>
+
 
 
   <?php include "sidecontrol.php"; ?>
