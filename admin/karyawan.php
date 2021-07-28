@@ -64,6 +64,23 @@
             <li><a href="index.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
           </ol>
         </section>
+         <?php  
+            // fungsi untuk menampilkan pesan
+            // jika alert = "" (kosong)
+            // tampilkan pesan "" (kosong)
+            if (empty($_GET['alert'])) {
+              echo "";
+            } 
+            // jika alert = 1
+            // tampilkan pesan Sukses "Jenis Barang baru berhasil disimpan"
+            elseif ($_GET['alert'] == 1) {
+              echo "<div class='alert alert-success alert-dismissable'>
+                      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                      <h4>  <i class='icon fa fa-check-circle'></i> Sukses!</h4>
+                      Data Berhasil Disimpan.
+                    </div>";
+            }
+            ?>
 
         <section class="content">
           <div class="row">
